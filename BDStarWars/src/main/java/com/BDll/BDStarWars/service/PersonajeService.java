@@ -36,7 +36,7 @@ public class PersonajeService implements IPersonaje {
     @Override
     public List<Personaje> findAllPersonajes() {
         return List.of(
-                new Personaje("luke", 30), new Personaje("pepe", 32), new Personaje("R2D2", 300));
+                new Personaje(1,"luke", 30), new Personaje(2,"pepe", 32), new Personaje(3,"R2D2", 300));
     }
 
     @Override
