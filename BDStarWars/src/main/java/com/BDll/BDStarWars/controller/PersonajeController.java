@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/v1")
+//@RequestMapping(path = "/v1")
 
 public class PersonajeController {
 
     @Autowired
     private PersonajeRepository personajeRepository;
+
 //    private final PersonajeService personajeService;
 //
 //    @Autowired
@@ -29,9 +30,9 @@ public class PersonajeController {
         return personajeRepository.findAll();
     }
 
-    @GetMapping(path = "/personajes/id")
+    @GetMapping(path = "/personajes/id'")
     public Personaje getById() {
-        return null;
+        return null; //personajeRepository.existsById();
     }
 
 }
