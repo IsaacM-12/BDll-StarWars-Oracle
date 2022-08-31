@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class OracleConexion {
 
     private static Connection conn = null;
-    private static String login = "c##misaac";
+    private static String login = "c##misaac"; //usuario
     private static String clave = "misaac";
     private static String url = "jdbc:oracle:thin:@192.168.100.143:1521:bd2";
 
