@@ -4,13 +4,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Entity
+//@Entity
 public class Type {
     @Id
     @GeneratedValue
     private int Id;
     private String name;
     private String skin;
+
+    public Type() {
+    }
 
     public Type(int id, String name, String skin) {
         this.Id = id;

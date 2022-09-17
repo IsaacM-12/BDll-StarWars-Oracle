@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Entity
+//@Entity
 public class Place {
     @Id
     @GeneratedValue
@@ -12,6 +12,9 @@ public class Place {
     private String name;
     private int temperature;
     private int size;
+
+    public Place() {
+    }
 
     public Place(int id, String name, int temperature, int size) {
         this.Id = id;
