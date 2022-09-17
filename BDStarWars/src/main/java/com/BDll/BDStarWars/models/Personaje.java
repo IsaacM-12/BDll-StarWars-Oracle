@@ -15,11 +15,11 @@ public class Personaje {
     public Personaje() {
     }
 
-    public Personaje(String name, int age) {
-        super();
-        this.name = name;
-        this.age = age;
-    }
+//    public Personaje(String name, int age) {
+//        super();
+//        this.name = name;
+//        this.age = age;
+//    }
 
     public Personaje(int id, String name, int age) {
         super();

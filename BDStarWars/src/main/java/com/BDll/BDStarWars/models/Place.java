@@ -4,23 +4,24 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-//@Entity
+@Entity
 public class Place {
     @Id
     @GeneratedValue
     private int Id;
     private String name;
     private int temperature;
-    private int size;
+    private int sizePlace;
 
     public Place() {
     }
 
-    public Place(int id, String name, int temperature, int size) {
+    public Place(int id, String name, int temperature, int sizePlace) {
+        super();
         this.Id = id;
         this.name = name;
         this.temperature = temperature;
-        this.size = size;
+        this.sizePlace = sizePlace;
     }
 
     public int getId() {
@@ -47,12 +48,12 @@ public class Place {
         this.temperature = temperature;
     }
 
-    public int getSize() {
-        return size;
+    public int getSizePlace() {
+        return sizePlace;
     }
 
-    public void setSize(int size) {
-        this.size = size;
+    public void setSizePlace(int sizePlace) {
+        this.sizePlace = sizePlace;
     }
 
     @Override
@@ -61,6 +62,6 @@ public class Place {
                 "Id=" + Id +
                 ", name='" + name + '\'' +
                 ", temperature=" + temperature +
-                ", size=" + size;
+                ", size=" + sizePlace;
     }
 }
