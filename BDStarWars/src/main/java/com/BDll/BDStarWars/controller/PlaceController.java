@@ -18,6 +18,7 @@ public class PlaceController {
 
 
     // seleccionar todos
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(path = "/place")
     public List<Place> getPLaces() {
         return placeRepository.findAll();

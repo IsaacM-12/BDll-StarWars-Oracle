@@ -19,6 +19,7 @@ public class PersonajeController {
 
 
     // seleccionar todos
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(path = "/personajes")
     public List<Personaje> getPersonajes() {
         return personajeRepository.findAll();
