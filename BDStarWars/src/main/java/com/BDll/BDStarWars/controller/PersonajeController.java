@@ -4,6 +4,7 @@ import com.BDll.BDStarWars.DTO.DTOPersonaje;
 import com.BDll.BDStarWars.models.Personaje;
 import com.BDll.BDStarWars.repository.PersonajeRepository;
 
+import com.BDll.BDStarWars.service.PersonajeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -17,6 +18,9 @@ public class PersonajeController {
     @Autowired
     private PersonajeRepository personajeRepository;
 
+    @Autowired // este no
+    private PersonajeService personajeService;
+
 
     // seleccionar todos
     @CrossOrigin(origins = "http://localhost:3000")
@@ -27,6 +31,7 @@ public class PersonajeController {
 
 
     // seleccionar por id
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(path = "/personajes/{id}")
     public Personaje getById(@PathVariable int id) {
         Optional<Personaje> personaje = personajeRepository.findById(id);
@@ -39,14 +44,23 @@ public class PersonajeController {
 
 
     // crea
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(path = "/personajes")
-    public void createPersonaje(@RequestBody DTOPersonaje newpersonaje){
-        Personaje personaje = new Personaje(1000,newpersonaje.getName(),newpersonaje.getAge()); // no se no se
-        personajeRepository.save(personaje);
+    public void createPersonaje(@RequestBody Personaje newpersonaje){
+        int id = newpersonaje.getId();
+        Optional<Personaje> personaje = personajeRepository.findById(id);
+
+        if(personaje.isEmpty()){
+            personajeRepository.save(newpersonaje);
+        }
+        else {
+            throw new RuntimeException("Personaje ID ocupado: " + id);
+        }
     }
 
 
     // actualiza por Id
+    @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping(path = "/personajes/{id}")
     public void updatePersonaje(@PathVariable int id,@RequestBody DTOPersonaje newpersonaje){
         Optional<Personaje> personaje = personajeRepository.findById(id);
@@ -61,6 +75,7 @@ public class PersonajeController {
 
 
     // borra por Id
+    @CrossOrigin(origins = "http://localhost:3000")
     @DeleteMapping(path = "/personajes/{id}")
     public void deletePersonaje(@PathVariable int id){
         Optional<Personaje> personaje = personajeRepository.findById(id);
@@ -68,5 +83,16 @@ public class PersonajeController {
             throw  new RuntimeException("personaje not found: " + id);
         }
         personajeRepository.deleteById(id);
+    }
+
+
+
+
+
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping(path = "/personajesaMano")
+    public List<Personaje> getPersonajesAMano() {
+        return personajeService.findAllPersonajes();
     }
 }

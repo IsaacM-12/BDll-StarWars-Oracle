@@ -26,6 +26,7 @@ public class PlaceController {
 
 
     // seleccionar por id
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(path = "/place/{id}")
     public Place getById(@PathVariable int id) {
         Optional<Place> place = placeRepository.findById(id);
@@ -38,14 +39,22 @@ public class PlaceController {
 
 
     // crea
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(path = "/place")
-    public void createPLace(@RequestBody DTOPlace newplace){
-        Place place = new Place(1000, newplace.getName(), newplace.getTemperature(), newplace.getSizePlace()); // no se no se
-        placeRepository.save(place);
+    public void createPLace(@RequestBody Place newplace){
+        int id = newplace.getId();
+        Optional<Place> place = placeRepository.findById(id);
+        if(place.isEmpty()){
+            placeRepository.save(newplace);
+        }
+        else {
+            throw new RuntimeException("Place ID ocupado: " + id);
+        }
     }
 
 
     // actualiza por Id
+    @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping(path = "/place/{id}")
     public void updatePLace(@PathVariable int id,@RequestBody DTOPlace newplace){
         Optional<Place> place = placeRepository.findById(id);
@@ -61,6 +70,7 @@ public class PlaceController {
 
 
     // borra por Id
+    @CrossOrigin(origins = "http://localhost:3000")
     @DeleteMapping(path = "/place/{id}")
     public void deletePLace(@PathVariable int id){
         Optional<Place> place = placeRepository.findById(id);

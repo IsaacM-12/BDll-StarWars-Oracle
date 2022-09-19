@@ -1,4 +1,5 @@
 #Isaac Melendez Gatgens
+pensado para oracle y react
 
 
 ###Para iniciar el proyecto, dentro de BDStarWars:

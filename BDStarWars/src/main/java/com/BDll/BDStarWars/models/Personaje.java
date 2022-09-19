@@ -7,7 +7,7 @@ import javax.persistence.Id;
 @Entity
 public class Personaje {
     @Id
-    @GeneratedValue
+    //@GeneratedValue
     private int id;
     private String name;
     private int age;

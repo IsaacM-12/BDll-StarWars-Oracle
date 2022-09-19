@@ -7,7 +7,7 @@ import javax.persistence.Id;
 //@Entity
 public class Type {
     @Id
-    @GeneratedValue
+    //@GeneratedValue
     private int Id;
     private String name;
     private String skin;
