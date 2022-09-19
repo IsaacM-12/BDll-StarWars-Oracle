@@ -1,7 +1,6 @@
 package com.BDll.BDStarWars.models;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
@@ -10,15 +9,18 @@ public class Personaje {
     //@GeneratedValue
     private int id;
     private String name;
+    private String gender;
+    private int height;
     private int age;
 
     public Personaje() {
     }
 
-    public Personaje(int id, String name, int age) {
-        super();
+    public Personaje(int id, String name, String gender, int height, int age) {
         this.id = id;
         this.name = name;
+        this.gender = gender;
+        this.height = height;
         this.age = age;
     }
 
@@ -46,12 +48,19 @@ public class Personaje {
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "Personaje{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                '}';
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 }

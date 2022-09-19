@@ -56,12 +56,4 @@ public class Place {
         this.sizePlace = sizePlace;
     }
 
-    @Override
-    public String toString() {
-        return "Place: " +
-                "Id=" + Id +
-                ", name='" + name + '\'' +
-                ", temperature=" + temperature +
-                ", size=" + sizePlace;
-    }
 }

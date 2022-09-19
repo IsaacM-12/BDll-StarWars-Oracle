@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-//@RequestMapping(path = "/place")
+//@RequestMapping(path = "/v1")
+
 public class PlaceController {
 
     @Autowired
@@ -32,7 +33,7 @@ public class PlaceController {
         Optional<Place> place = placeRepository.findById(id);
 
         if(place.isEmpty()){
-            throw new RuntimeException("place not found: " + id);
+            throw new RuntimeException("Place not found: " + id);
         }
         return place.get();
     }
@@ -59,7 +60,7 @@ public class PlaceController {
     public void updatePLace(@PathVariable int id,@RequestBody DTOPlace newplace){
         Optional<Place> place = placeRepository.findById(id);
         if(place.isEmpty()){
-            throw new RuntimeException("place not found: " + id);
+            throw new RuntimeException("Place not found: " + id);
         }
         place.get().setName(newplace.getName());
         place.get().setTemperature(newplace.getTemperature());
@@ -75,7 +76,7 @@ public class PlaceController {
     public void deletePLace(@PathVariable int id){
         Optional<Place> place = placeRepository.findById(id);
         if(place.isEmpty()){
-            throw  new RuntimeException("personaje not found: " + id);
+            throw  new RuntimeException("Place not found: " + id);
         }
         placeRepository.deleteById(id);
     }

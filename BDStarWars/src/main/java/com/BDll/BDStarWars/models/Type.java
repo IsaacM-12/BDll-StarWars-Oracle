@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-//@Entity
+@Entity
 public class Type {
     @Id
     //@GeneratedValue
@@ -45,11 +45,4 @@ public class Type {
         this.skin = skin;
     }
 
-    @Override
-    public String toString() {
-        return "Type: " +
-                "Id=" + Id +
-                ", name='" + name + '\'' +
-                ", skin='" + skin;
-    }
 }

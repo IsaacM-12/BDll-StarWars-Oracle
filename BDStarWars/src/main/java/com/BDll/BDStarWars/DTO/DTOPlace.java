@@ -26,12 +26,4 @@ public class DTOPlace {
         return sizePlace;
     }
 
-    @Override
-    public String toString() {
-        return "DTOPlace{" +
-                "name='" + name + '\'' +
-                ", temperature=" + temperature +
-                ", size=" + sizePlace +
-                '}';
-    }
 }

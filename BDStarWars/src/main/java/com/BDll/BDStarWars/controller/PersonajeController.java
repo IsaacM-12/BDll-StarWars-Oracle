@@ -18,10 +18,6 @@ public class PersonajeController {
     @Autowired
     private PersonajeRepository personajeRepository;
 
-    @Autowired // este no
-    private PersonajeService personajeService;
-
-
     // seleccionar todos
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(path = "/personajes")
@@ -37,7 +33,7 @@ public class PersonajeController {
         Optional<Personaje> personaje = personajeRepository.findById(id);
 
         if(personaje.isEmpty()){
-            throw new RuntimeException("personaje not found: " + id);
+            throw new RuntimeException("Character not found: " + id);
         }
         return personaje.get();
     }
@@ -54,7 +50,7 @@ public class PersonajeController {
             personajeRepository.save(newpersonaje);
         }
         else {
-            throw new RuntimeException("Personaje ID ocupado: " + id);
+            throw new RuntimeException("Character ID ocupado: " + id);
         }
     }
 
@@ -65,10 +61,12 @@ public class PersonajeController {
     public void updatePersonaje(@PathVariable int id,@RequestBody DTOPersonaje newpersonaje){
         Optional<Personaje> personaje = personajeRepository.findById(id);
         if(personaje.isEmpty()){
-            throw new RuntimeException("personaje not found: " + id);
+            throw new RuntimeException("Character not found: " + id);
         }
         personaje.get().setAge(newpersonaje.getAge());
         personaje.get().setName(newpersonaje.getName());
+        personaje.get().setGender(newpersonaje.getGender());
+        personaje.get().setHeight(newpersonaje.getHeight());
 
         personajeRepository.save(personaje.get());
     }
@@ -80,7 +78,7 @@ public class PersonajeController {
     public void deletePersonaje(@PathVariable int id){
         Optional<Personaje> personaje = personajeRepository.findById(id);
         if(personaje.isEmpty()){
-            throw  new RuntimeException("personaje not found: " + id);
+            throw  new RuntimeException("Character not found: " + id);
         }
         personajeRepository.deleteById(id);
     }
@@ -88,7 +86,8 @@ public class PersonajeController {
 
 
 
-
+    @Autowired // este no
+    private PersonajeService personajeService;
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(path = "/personajesaMano")
