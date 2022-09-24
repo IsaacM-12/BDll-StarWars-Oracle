@@ -12,6 +12,9 @@ import java.util.List;
 
 import static com.BDll.BDStarWars.Conection.OracleConexion.getConnection;
 
+// este no se utiliza esta de ejemplo
+
+// una muestra del metodo de forma manual, utilizo el que genera hibernate
 
 @Service
 public class PersonajeService implements IPersonaje {
@@ -31,6 +34,8 @@ public class PersonajeService implements IPersonaje {
                 personaje.setId(respuesta.getInt("id"));
                 personaje.setName(respuesta.getString("name"));
                 personaje.setAge(respuesta.getInt("age"));
+                personaje.setGender(respuesta.getString("gender"));
+                personaje.setHeight(respuesta.getInt("Height"));
                 personajesList.add(personaje);
             }
 

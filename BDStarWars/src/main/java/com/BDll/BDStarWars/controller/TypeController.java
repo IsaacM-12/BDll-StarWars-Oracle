@@ -1,9 +1,7 @@
 package com.BDll.BDStarWars.controller;
 
 
-import com.BDll.BDStarWars.DTO.DTOPlace;
 import com.BDll.BDStarWars.DTO.DTOType;
-import com.BDll.BDStarWars.models.Place;
 import com.BDll.BDStarWars.models.Type;
 import com.BDll.BDStarWars.repository.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;

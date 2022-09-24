@@ -1,8 +1,5 @@
 
-
--- -- -- insert into personaje(id,name,age) values(3,'juan',30);
--- -- -- insert into personaje(id,name,age) values(3,'juan',30);
--- --
+-- solo para h2
 
 
 -- insert into place(id,name,temperature,size_Place) values(1,'Tatooine',30,3350);

@@ -1,10 +1,6 @@
 package com.BDll.BDStarWars.models;
 
-import org.springframework.data.annotation.Reference;
-
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity

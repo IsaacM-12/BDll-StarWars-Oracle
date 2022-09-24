@@ -86,7 +86,9 @@ public class PersonajeController {
 
 
 
-    @Autowired // este no
+    // este no se utiliza esta de ejemplo
+    // una muestra del metodo de forma manual, utilizo el que genera hibernate
+    @Autowired
     private PersonajeService personajeService;
 
     @CrossOrigin(origins = "http://localhost:3000")

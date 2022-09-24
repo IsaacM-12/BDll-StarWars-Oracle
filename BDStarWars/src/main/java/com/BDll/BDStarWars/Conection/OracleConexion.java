@@ -18,12 +18,12 @@ public class OracleConexion {
             conn = DriverManager.getConnection(url,login,clave);
             conn.setAutoCommit(false);
 
-            if(conn != null){
-                System.out.println("Conexion Exitosa");
-            }
-            else {
-                System.out.println("Conexion Erronea");
-            }
+//            if(conn != null){
+//                System.out.println("Conexion Exitosa");
+//            }
+//            else {
+//                System.out.println("Conexion Erronea");
+//            }
         } catch (ClassNotFoundException | SQLException e){
             JOptionPane.showMessageDialog(null, "Conexion ERRONEA " + e.getMessage());
         }
