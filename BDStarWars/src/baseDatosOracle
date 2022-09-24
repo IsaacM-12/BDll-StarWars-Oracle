@@ -212,6 +212,31 @@ create or replace trigger change_Personaje
 
 end change_Personaje;
 
+
+-- Trigger para Personaje_Relation
+create or replace trigger change_Personaje_Relation
+ before insert or delete or update
+ on Personaje_Relation
+ for each row
+    begin
+
+     if inserting then
+       insert into respaldo(operation,dateresplado,usernam,previous_data,new_data,tableRespald)
+            values ('Insert', sysdate, user, null , :new.id_Personaje || '  ' ||  :new.id_Place || '  ' || :new.id_Type , 'Personaje_Relation');
+     end if;
+
+     if deleting then
+      insert into respaldo(operation,dateresplado,usernam,previous_data,new_data,tableRespald)
+            values ('Update', sysdate, user, :old.id_Personaje || '  ' ||  :old.id_Place || '  ' || :old.id_Type , null, 'Personaje_Relation');
+     end if;
+
+     if updating then
+       insert into respaldo(operation,dateresplado,usernam,previous_data,new_data,tableRespald)
+            values ('Update', sysdate, user, :old.id_Personaje || '  ' ||  :old.id_Place || '  ' || :old.id_Type,
+            :new.id_Personaje || '  ' ||  :new.id_Place || '  ' || :new.id_Type, 'Personaje_Relation');
+     end if;
+
+end change_Personaje_Relation;
 -- -----------------------------------------------------------
 -- Incersion de datos
 -- -----------------------------------------------------------
