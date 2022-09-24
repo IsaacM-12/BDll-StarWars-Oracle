@@ -1,0 +1,241 @@
+-- -------------------------------------
+-- Isaac Melendez Gatgens 2021123344
+-- Jeaustin Obando Arias 2020067573
+-- -------------------------------------
+
+drop index I_TypeId;
+drop index I_PlaceId;
+drop index I_PersonaId;
+drop index I_RelationIdType;
+drop index I_RelationIdPlace;
+
+drop table personaje;
+drop table place;
+drop table type;
+drop table Personaje_Relation;
+drop table Respaldo;
+
+drop procedure insertar_Relacion;
+
+-- drop trigger borrar_relacion_Personaje;
+
+-- -----------------------------------------------------------
+-- PROCEDURE y FUNCTION
+-- -----------------------------------------------------------
+create or replace function Revisar_personaje(idP int) return int
+is
+    idTemp number;
+begin
+    select id into idTemp from Personaje where  idP = id;
+    return idTemp;
+
+exception
+    when NO_DATA_FOUND then
+        return 0;
+end Revisar_personaje;
+
+-- -----------------------------------------
+create or replace function Revisar_Place(idP int) return int
+is
+    idTemp number;
+begin
+    select id into idTemp from Place where  idP = id;
+    return idTemp;
+
+exception
+    when NO_DATA_FOUND then
+        return 0;
+end Revisar_Place;
+-- -----------------------------------------
+create or replace function Revisar_Type(idT int) return int
+is
+    idTemp number;
+begin
+    select id into idTemp from Type where  idT = id;
+    return idTemp;
+
+exception
+    when NO_DATA_FOUND then
+        return 0;
+end Revisar_Type;
+-- --------------------------------------
+
+CREATE OR REPLACE PROCEDURE insertar_Relacion(idPersonajeE int , idTypeE int, idPlaceE int)
+IS
+    tempIdPersonaje int;
+    tempIdType int;
+    tempIdPlace int;
+BEGIN
+    select id_Personaje into tempIdPersonaje from Personaje_Relation pr where idPersonajeE = pr.id_Personaje;
+
+    exception
+    WHEN NO_DATA_FOUND then
+        tempIdPersonaje := Revisar_Personaje(idPersonajeE);
+        tempIdType := Revisar_Place(idTypeE);
+        tempIdPlace := Revisar_Type(idPlaceE);
+
+        if (tempIdPersonaje != 0 and tempIdType != 0 and tempIdPlace != 0) then
+                insert into Personaje_Relation(id_Personaje, id_Type, id_Place) values (idPersonajeE, idTypeE, idPlaceE);
+        end if;
+
+END insertar_Relacion;
+-- -----------------------------------------------------------
+-- viendo que
+-- -----------------------------------------------------------
+
+-- -----------------------------------------------------------
+-- creacion de tablas
+-- -----------------------------------------------------------
+CREATE TABLE Personaje_Relation(
+  id_Personaje int,
+  id_Type int not null,
+  id_Place int not null,
+  PRIMARY KEY (id_Personaje)
+   );
+
+CREATE TABLE personaje(
+  id number primary key,
+  name varchar(70) not null,
+  age int not null,
+  height int not null,
+  gender varchar(50) not null
+  );
+
+CREATE TABLE place(
+  id number primary key,
+  name varchar(70) not null,
+  temperature int not null,
+  size_Place int not null
+  );
+
+CREATE TABLE type(
+  id number primary key,
+  name varchar(70) not null,
+  skin varchar(50) not null
+  );
+
+CREATE TABLE respaldo(
+    id number generated always as identity primary key,
+     operation varchar2(15),
+     dateresplado date,
+     usernam varchar2(40),
+     previous_data varchar(160),
+     new_data varchar(160),
+     tableRespald varchar2(60)
+ );
+
+-- -----------------------------------------------------------
+-- Index
+-- -----------------------------------------------------------
+create index I_TypeId on Type(name);
+create index I_PlaceId on Place(name);
+create index I_PersonajeId on Personaje(name);
+
+create index I_RelationIdType on Personaje_Relation(id_Type);
+create index I_RelationIdPlace on Personaje_Relation(id_Place);
+
+-- -----------------------------------------------------------
+-- Trigger
+-- -----------------------------------------------------------
+ -- Trigger para place
+create or replace trigger change_Place
+ before insert or delete or update
+ on Place
+ for each row
+    begin
+
+     if inserting then
+       insert into respaldo(operation,dateresplado,usernam,previous_data,new_data,tableRespald)
+            values ('Insert', sysdate, user, null , :new.name || '  ' ||  :new.temperature || '  ' || :new.size_Place, 'Place');
+     end if;
+
+     if deleting then
+      insert into respaldo(operation,dateresplado,usernam,previous_data,new_data,tableRespald)
+            values ('Delete', sysdate, user, :old.name || '  ' || :old.temperature || '  ' || :old.size_Place, null, 'Place');
+      delete from Personaje_Relation pr where  pr.id_Place = :old.id;
+     end if;
+
+     if updating then
+       insert into respaldo(operation,dateresplado,usernam,previous_data,new_data,tableRespald)
+            values ('Update', sysdate, user, :old.name || '  ' || :old.temperature || '  ' || :old.size_Place, :new.name || '  ' ||  :new.temperature || '  ' || :new.size_Place, 'Place');
+     end if;
+
+end change_Place;
+
+ -- Trigger para type
+create or replace trigger change_Type
+ before insert or delete or update
+ on Type
+ for each row
+    begin
+
+     if inserting then
+       insert into respaldo(operation,dateresplado,usernam,previous_data,new_data,tableRespald)
+            values ('Insert', sysdate, user, null , :new.name || '  ' ||  :new.skin, 'Type');
+     end if;
+
+     if deleting then
+      insert into respaldo(operation,dateresplado,usernam,previous_data,new_data,tableRespald)
+            values ('Delete', sysdate, user, :old.name || '  ' || :old.skin, null, 'Type');
+      delete from Personaje_Relation pr where  pr.id_Type = :old.id;
+     end if;
+
+     if updating then
+       insert into respaldo(operation,dateresplado,usernam,previous_data,new_data,tableRespald)
+            values ('Update', sysdate, user, :old.name || '  ' || :old.skin , :new.name || '  ' ||  :new.skin, 'Type');
+     end if;
+
+end change_Type;
+
+ -- Trigger para personaje
+create or replace trigger change_Personaje
+ before insert or delete or update
+ on Personaje
+ for each row
+    begin
+
+     if inserting then
+       insert into respaldo(operation,dateresplado,usernam,previous_data,new_data,tableRespald)
+            values ('Insert', sysdate, user, null , :new.name || '  ' ||  :new.age || '  ' || :new.height || '  ' || :new.gender , 'Personaje');
+     end if;
+
+     if deleting then
+      insert into respaldo(operation,dateresplado,usernam,previous_data,new_data,tableRespald)
+            values ('Update', sysdate, user, :old.name || '  ' ||  :old.age || '  ' || :old.height || '  ' || :old.gender , null, 'Personaje');
+      delete from Personaje_Relation pr where  pr.id_Personaje = :old.id;
+     end if;
+
+     if updating then
+       insert into respaldo(operation,dateresplado,usernam,previous_data,new_data,tableRespald)
+            values ('Update', sysdate, user, :old.name || '  ' ||  :old.age || '  ' || :old.height || '  ' || :old.gender , :new.name || '  ' ||  :new.age || '  ' || :new.height || '  ' || :new.gender, 'Personaje');
+     end if;
+
+end change_Personaje;
+
+-- -----------------------------------------------------------
+-- Incersion de datos
+-- -----------------------------------------------------------
+insert into personaje(id,name,age,height,gender) values(1, 'Luke Skywalker', 35, 172,  'Masculino');
+insert into personaje(id,name,age,height,gender) values(2, 'R2-D2', 96, 96,  'Masculino');
+
+insert into place(id,name,temperature,size_Place) values(1,'Tatooine',48,10465);
+insert into place(id,name,temperature,size_Place) values(2,'Hoth',2,7200);
+insert into place(id,name,temperature,size_Place) values(3,'DQar',25,4000);
+
+insert into type(id,name,skin) values(1,'Humano','Piel');
+insert into type(id,name,skin) values(2,'Wookiee','Marrón');
+
+
+-- -----------------------------------------------------------
+-- Llamados
+-- -----------------------------------------------------------
+select * from personaje;
+select * from type;
+select * from place;
+select * from Personaje_Relation;
+select * from respaldo order by id;
+
+call insertar_Relacion(2,12,54);
+
+
+commit;
