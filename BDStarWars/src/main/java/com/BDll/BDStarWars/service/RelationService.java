@@ -13,14 +13,15 @@ public class RelationService implements IRelation {
     //String sql = "{ call insertar_Relacion(?,?,?) }";
     @Override
     public void insertPersonaje(int idPer, int idPlace, int idType) {
+
         StoredProcedureQuery query = entityManager
                 .createStoredProcedureQuery("insertar_Relacion")
-                .registerStoredProcedureParameter("idPersonaje2",Integer.class, ParameterMode.IN)
-                .registerStoredProcedureParameter("idType",Integer.class, ParameterMode.IN)
-                .registerStoredProcedureParameter("idPlace",Integer.class, ParameterMode.IN)
-                .setParameter("idPersonaje2", idPer)
-                .setParameter("idType", idType)
-                .setParameter("idPlace", idPlace);
+                .registerStoredProcedureParameter("idPersonajeE",Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("idTypeE",Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("idPlaceE",Integer.class, ParameterMode.IN)
+                .setParameter("idPersonajeE", idPer)
+                .setParameter("idTypeE", idType)
+                .setParameter("idPlaceE", idPlace);
         query.execute();
     }
 }
